@@ -43,7 +43,7 @@ const OTP = () => {
 
     const otp = otpValues.join('');
     console.log('Verifying OTP:', otp); // You can make API call here
-    navigate('/admin/auth/changepassword');
+    navigate('/admin/changepassword');
   };
 
   return (

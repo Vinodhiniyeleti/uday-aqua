@@ -34,7 +34,7 @@ const ForgotPassword = () => {
     const error = validateEmail(email);
     setEmailError(error);
 
-    if (!error) navigate('/admin/auth/OTP');
+    if (!error) navigate('/admin/OTP');
   };
 
   return (

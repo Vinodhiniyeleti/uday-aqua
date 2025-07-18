@@ -49,7 +49,7 @@ const ChangePassword = () => {
 
   const handleSubmit = () => {
     if (handleValidation()) {
-      navigate('/admin/auth/login');
+      navigate('/admin/login');
     }
   };
 
@@ -125,7 +125,7 @@ const ChangePassword = () => {
           <Box className="forgot-password-link">
             <Link
               component={RouterLink}
-              to="/admin/auth/forgotpassword"
+              to="/admin/forgotpassword"
               underline="hover"
               fontSize="14px"
             >

@@ -131,7 +131,7 @@ const Login = () => {
           <Box className="forgot-password-link">
             <Link
               component={RouterLink}
-              to="/admin/auth/forgotpassword"
+              to="/admin/forgotpassword"
               underline="hover"
               fontSize="14px"
             >
