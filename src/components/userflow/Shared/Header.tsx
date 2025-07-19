@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import Drawer from "@mui/material/Drawer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import sidebarIcon from "../../../assets/home/sidebar_btn.svg";
+import { useLocation } from "react-router-dom";
 
 const navItems = [
   "Home",
@@ -27,6 +28,7 @@ const Header = () => {
   const [activeNav, setActiveNav] = useState(navItems[0]);
   const [trigger, setTrigger] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,6 +42,8 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const isHome = location.pathname === "/";
 
   return (
     <AppBar
@@ -139,8 +143,8 @@ const Header = () => {
               justifyContent: "space-between",
               px: 4,
               py: 1.5,
-              bgcolor: "transparent",
-              color: trigger ? theme.palette.primary.main : "#fff",
+              bgcolor: trigger || !isHome ? "#fff" : "transparent" ,
+              color: trigger || !isHome ? theme.palette.primary.main : "#fff",
               transition: "background 0.3s, color 0.3s, border-bottom 0.3s",
               width: "100%"
             }}
@@ -150,12 +154,12 @@ const Header = () => {
                 <MailOutlineIcon fontSize="small" />
                 <Typography variant="body2" sx={{ fontWeight: 500 }}>info@Uday.com</Typography>
               </Box>
-              <Box width="1px" height={20} bgcolor={trigger ? theme.palette.primary.main : '#1976d2'} />
+              <Box width="1px" height={20} bgcolor={trigger || !isHome ? theme.palette.primary.main : '#1976d2'} />
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} >
                 <PhoneIcon fontSize="small" />
                 <Typography variant="body2" sx={{ fontWeight: 500 }}>+91 97911 99909</Typography>
               </Box>
-              <Box width="1px" height={20} bgcolor={trigger ? theme.palette.primary.main : '#1976d2'} />
+              <Box width="1px" height={20} bgcolor={trigger || !isHome ? theme.palette.primary.main : '#1976d2'} />
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} >
                 <LocationOnIcon fontSize="small" />
                 <Typography variant="body2" sx={{ fontWeight: 500 }}>Hyderabad</Typography>
@@ -171,7 +175,7 @@ const Header = () => {
                 width: 300,
                 borderRadius: 5,
                 mr:6,
-                border: trigger ? `1.5px solid ${theme.palette.primary.main}` : "none",
+                border: trigger || !isHome ? `1.5px solid ${theme.palette.primary.main}` : "none",
                 boxShadow: "none",
                 bgcolor: "white",
                 transition: "background 0.3s, border 0.3s"

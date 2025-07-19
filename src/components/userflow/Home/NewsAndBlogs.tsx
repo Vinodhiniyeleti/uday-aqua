@@ -5,6 +5,7 @@ import fishesImg from "../../../assets/home/news_img.png";
 import { useRef } from "react";
 import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
 import useIsOverflowing from "./useIsOverflowing";
+import useHomeStyles from "./homeStyles";
 
 import newsImg1 from "../../../assets/news_and_blogs/news_1.jpg";
 import newsImg2 from "../../../assets/news_and_blogs/news_2.jpg";
@@ -40,41 +41,39 @@ const newsData = [
 const NewsAndBlogs = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { classes } = useHomeStyles(isMobile);
   const scrollRef = useRef<HTMLDivElement>(null);
   useAutoHorizontalScroll(scrollRef);
   const isOverflowing = useIsOverflowing(scrollRef);
 
   return (
-    <Box sx={{ width: "100%", py: isMobile ? 2 : 6, background: "#fff", position: "relative" }}>
-      <Box component="img" src={fishesImg} alt="Fishes" sx={{ position: "absolute", left: 0, top: -10, zIndex: 0, display: isMobile ? "none" : "" }} />
+    <Box className={classes.newsRoot}>
+      <Box component="img" src={fishesImg} alt="Fishes" className={classes.newsFishesImg} />
       <SectionTitle title="News & Blog" />
       <Box
         ref={scrollRef}
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "nowrap",
-          justifyContent: isOverflowing ? "flex-start" : "center",
-          alignItems: "stretch",
-          mt: 6,
-          gap: 8,
-          width: "100%",
-          overflowX: "auto",
-          overflowY: "hidden",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          '::-webkit-scrollbar': { display: 'none' },
-        }}
+        className={
+          classes.newsScrollWrap +
+          ' ' +
+          (isOverflowing ? classes.newsScrollFlexStart : classes.newsScrollCenter)
+        }
       >
-        {isOverflowing && <Box sx={{ ml : -7}}  />}
+        {isOverflowing && <Box className={classes.newsOverflowBox} />}
         {newsData.map((item, idx) => (
-          <Box key={idx} sx={{ minWidth: 320, maxWidth: 380, width: 340, boxSizing: 'border-box', flex: '0 0 auto', height: '100%', ml: !isOverflowing && idx === 0 ? 4 : 0, mr: !isOverflowing && idx === newsData.length - 1 ? 4 : 0, display: 'flex', alignItems: 'stretch' }}>
-            <Box sx={{ width: '90%', mx: 'auto', height: '100%' }}>
+          <Box
+            key={idx}
+            className={
+              classes.newsCardOuter +
+              (idx === 0 && !isOverflowing ? ' ' + classes.newsCardOuterFirst : '') +
+              (idx === newsData.length - 1 && !isOverflowing ? ' ' + classes.newsCardOuterLast : '')
+            }
+          >
+            <Box className={classes.newsCardInner}>
               <NewsCard {...item} />
             </Box>
           </Box>
         ))}
-        {isOverflowing && <Box  />}
+        {isOverflowing && <Box />}
       </Box>
     </Box>
   );
